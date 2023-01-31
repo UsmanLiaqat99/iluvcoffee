@@ -2,13 +2,14 @@ import { Controller, Get, Post, Patch,  Delete, Param, Body, Query } from "@nest
 import { CoffeesService } from "./coffees.service";
 import { CreateCoffeeDto } from "./dto/create-coffee.dto/create-coffee.dto";
 import { UpdateCoffeeDto } from "./dto/update-coffee.dto/update-coffee.dto";
+import { PaginationQueryDto } from "../common/dto/pagination-query.dto/pagination-query.dto";
 @Controller("coffees")
 export class CoffeesController {
   constructor(private readonly coffeesService: CoffeesService) {
   }
   @Get()
-  findAll(@Query() paginationQuery) {
-    return this.coffeesService.findAll()
+  findAll(@Query() paginationQuery: PaginationQueryDto) {
+    return this.coffeesService.findAll(paginationQuery)
   }
 
   @Get(":id")
@@ -17,7 +18,7 @@ export class CoffeesController {
   }
 
   @Post()
-  create(@Body("name") createCoffeeDto: CreateCoffeeDto) {
+  create(@Body() createCoffeeDto: CreateCoffeeDto) {
   return this.coffeesService.create(createCoffeeDto)
   }
 
